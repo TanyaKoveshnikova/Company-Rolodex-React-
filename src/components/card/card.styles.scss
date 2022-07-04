@@ -1,0 +1,32 @@
+
+.card-conteiner {
+    display: flex;
+    flex-direction: row;
+    background-color: #95dada;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 1.3rem;
+    cursor: pointer;
+    transform: translateZ(0);
+    transition: transform 0.25s easy-out;
+    align-items: center
+  }
+  
+  .card-conteiner:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-logo img{
+    width: 7rem;
+    margin-right: 1.3em;
+  }
+  
+  .card-information {
+    text-align: left;
+  }
+  
+  .card-name{
+      font-weight: 600;
+      font-size: 1.1em;
+  }
+  
