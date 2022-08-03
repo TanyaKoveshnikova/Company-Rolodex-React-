@@ -1,20 +1,44 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
+import { getData } from "./utils/data.utils";
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
 
 // создание компонента через функцию( functional component )
 
+export type Company = {
+  id: number;
+  uid: string;
+  business_name: string;
+  suffix?: string;
+  industry?: string;
+  catch_phrase?: string;
+  buzzword?: string;
+  bs_company_statement?: string;
+  employee_identification_number?: string;
+  duns_number?: string;
+  logo?: string;
+  type?: string;
+  phone_number: string;
+  full_address?: string;
+  latitude?: number;
+  longitude?: number;
+};
+
+const COMPANIES_URL =
+  "https://random-data-api.com/api/company/random_company?size=15";
+
 const App = () => {
   const [searchField, setSearchField] = useState("");
-  const [companyItems, setCompanyItems] = useState([]);
+  const [companyItems, setCompanyItems] = useState<Company[]>([]);
   const [filteredCompany, setFilteredCompany] = useState(companyItems);
 
   useEffect(() => {
-    fetch("https://random-data-api.com/api/company/random_company?size=15")
-      .then((response) => response.json())
-      .then((companyItems) => setCompanyItems(companyItems));
+    const fetchCompanies = async () => {
+      const companies = await getData<Company[]>(COMPANIES_URL);
+      setCompanyItems(companies);
+    };
+    fetchCompanies();
   }, []);
 
   useEffect(() => {
@@ -25,7 +49,7 @@ const App = () => {
     setFilteredCompany(newFilteredCompany);
   }, [companyItems, searchField]);
 
-  const onSearchChange = (event) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
   };
@@ -39,7 +63,7 @@ const App = () => {
         placeholder="search"
         className="company-search-box"
       />
-      <CardList company={filteredCompany} />
+      <CardList companies={filteredCompany} />
     </div>
   );
 };

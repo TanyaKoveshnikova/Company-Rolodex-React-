@@ -1,6 +1,12 @@
+import { Company } from "../../App";
+
 import "./card.styles.scss";
 
-const Card = ({ companyItem }) => {
+type CardProps = {
+  companyItem: Company
+}
+
+const Card = ({ companyItem }: CardProps) => {
   const { business_name, industry, type, logo } = companyItem;
   return (
     <div className="card-conteiner">
