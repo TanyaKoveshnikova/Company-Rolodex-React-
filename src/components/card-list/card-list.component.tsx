@@ -1,18 +1,21 @@
-import { Company } from "../../App";
+import {useAppSelector} from "../../store/hooks";
 import Card from "../card/card.component";
 
 import "./card-list.styles.css";
 
-type CartListProps = {
-  companies: Company[];
-};
+const CardList = () => {
+    const companies = useAppSelector((state) => state.companies.companyItems)
 
-const CardList = ({  companies }: CartListProps) => (
-  <div className="card-list">
-    {companies.map((companyItem) => {
-      return <Card companyItem={companyItem} key={companyItem.id} />;
-    })}
-  </div>
-);
+    return (
+        <div className="container-card-list">
+            <div></div>
+            <div>
+                {companies.map((companyItem) => {
+                    return <Card companyItem={companyItem} key={companyItem.id}/>;
+                })}
+            </div>
+        </div>
+    )
+}
 
 export default CardList;
