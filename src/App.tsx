@@ -1,7 +1,7 @@
 import {Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
 import {useAppDispatch} from "./store/hooks";
-import {setCompanies} from "./store/companies/companies-slice";
+import {setCompaniesInit} from "./store/companies/companies-slice";
 
 import axios from "axios";
 
@@ -34,53 +34,24 @@ const COMPANIES_URL =
     "https://random-data-api.com/api/company/random_company?size=20";
 
 const App = () => {
-    // const [searchField, setSearchField] = useState("");
-    // const [companyItems, setCompanyItems] = useState<Company[]>([]);
-    // const [filteredCompany, setFilteredCompany] = useState(companyItems);
-    //
-    //
-    // useEffect(() => {
-    //   const newFilteredCompany = companyItems.filter((item) => {
-    //     return item.business_name.toLocaleLowerCase().includes(searchField);
-    //   });
-    //
-    //   setFilteredCompany(newFilteredCompany);
-    // }, [companyItems, searchField]);
-    //
-    // const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    //   const searchFieldString = event.target.value.toLocaleLowerCase();
-    //   setSearchField(searchFieldString);
-    // };
-
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         axios.get(COMPANIES_URL)
             .then(companies => {
                 const companyItems = companies.data;
-                dispatch(setCompanies(companyItems));
+                dispatch(setCompaniesInit(companyItems));
             })
-    }, []);
+    });
 
     return (
         <div className="App">
             <Routes>
                 <Route path="/" element={<Navigation/>}>
                     <Route index element={< CardList/>}/>
-                    <Route path="/:id" element={<CompanyDetail />} />
-                    {/*<Route path="/sign-in" element={<SignIn />} />*/}
-                    {/*<Route path="/sign-up" element={<SignUp />} />*/}
-                    {/*<Route path="/checkout" element={<CheckoutCart />} />*/}
+                    <Route path="/:id" element={<CompanyDetail/>}/>
                 </Route>
             </Routes>
-            {/*<h1 className="app-title">Company Rolodex</h1>*/}
-
-            {/*<SearchBox*/}
-            {/*  onSearchHandler={onSearchChange}*/}
-            {/*  placeholder="search"*/}
-            {/*  className="company-search-box"*/}
-            {/*/>*/}
-            {/*<CardList companies={filteredCompany} />*/}
         </div>
     );
 };

@@ -2,5 +2,5 @@
   width: 60vw;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.7fr 3fr 1fr;
+  grid-template-columns: 0.7fr 3fr 1.2fr;
 }

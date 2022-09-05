@@ -1,6 +1,6 @@
 import {Company} from "../../App";
 
-import "./card.styles.scss";
+import "./company-item.styles.scss";
 import {Link} from "react-router-dom";
 import {useAppDispatch} from "../../store/hooks";
 import {setCompanyDetail} from "../../store/companies/companies-slice";
@@ -10,7 +10,7 @@ type CardProps = {
 }
 
 const Card = ({companyItem}: CardProps) => {
-    const {business_name, industry, type, logo, id} = companyItem;
+    const {business_name, industry, type, logo, id, suffix} = companyItem;
     const dispatch = useAppDispatch();
 
     function onChooseCard() {
@@ -24,7 +24,7 @@ const Card = ({companyItem}: CardProps) => {
             </div>
             <div className="card-information">
                 <h2 className="card-name">
-                    {business_name} "{business_name}"
+                    {suffix} "{business_name}"
                 </h2>
                 <p>{industry}</p>
                 <p>{type}</p>
