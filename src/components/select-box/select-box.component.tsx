@@ -13,7 +13,7 @@ const SelectBox = (props: ISelectBoxProps) => {
     return (
         <div className='select-boxItem'>
             <select onChange={onSearchHandler} name="" id="" className={`custom-select-field ${className}`}>
-                <option value="">{firstOptions}</option>
+                <option value='null'>{firstOptions}</option>
                 {optionItems.map((optionItem) => {
                     return <option key={optionItem} value={optionItem}>{optionItem}</option>;
                 })}

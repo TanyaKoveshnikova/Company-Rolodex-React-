@@ -1,13 +1,22 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 import {ICompany} from "../../interfaces/company";
-import {filterCompanies, filterOnTypes, getUniqueTypesCompanies} from "./companies-actions";
+import {
+    filterByIndustry,
+    filterByType,
+    filterCompanies,
+    getUniqueIndustryCompanies,
+    getUniqueTypesCompanies
+} from "./companies-actions";
 
 interface CompaniesState {
     companyItemsBase: ICompany[],
     companyItems: ICompany[],
     companyDetail: ICompany | null,
-    uniqueCompanyTypes: (string | undefined)[]
+    uniqueCompanyTypes: (string | undefined)[],
+    uniqueCompanyIndustry: (string | undefined)[],
+    typesIsNull: string ,
+    industryIsNull: string
 }
 
 const initialState: CompaniesState = {
@@ -15,6 +24,9 @@ const initialState: CompaniesState = {
     companyItems: [],
     companyDetail: null,
     uniqueCompanyTypes: [],
+    uniqueCompanyIndustry: [],
+    typesIsNull: 'null',
+    industryIsNull: 'null'
 }
 
 const companiesSlice = createSlice({
@@ -24,7 +36,8 @@ const companiesSlice = createSlice({
         setCompaniesInit(state, action) {
             state.companyItemsBase = action.payload;
             state.companyItems = action.payload;
-            getUniqueTypesCompanies(state)
+            getUniqueTypesCompanies(state, state.companyItemsBase);
+            getUniqueIndustryCompanies(state, state.companyItemsBase)
         },
         setCompanies(state, action) {
             state.companyItems = action.payload;
@@ -36,7 +49,12 @@ const companiesSlice = createSlice({
             filterCompanies(state, action)
         },
         filterCompaniesOnTypes(state, action) {
-            filterOnTypes(state, action)
+            state.typesIsNull = action.payload
+            filterByType(state, action.payload)
+        },
+        filterCompaniesOnIndustry(state, action) {
+            state.industryIsNull= action.payload
+            filterByIndustry(state, action.payload)
         }
     }
 })
@@ -46,7 +64,8 @@ export const {
     setCompanyDetail,
     setCompaniesInit,
     filterCompaniesTextBox,
-    filterCompaniesOnTypes
+    filterCompaniesOnTypes,
+    filterCompaniesOnIndustry
 } = companiesSlice.actions;
 export default companiesSlice.reducer;
 
