@@ -27,26 +27,20 @@ export const getUniqueIndustryCompanies = (state: any, array: any[]) => {
     state.uniqueCompanyIndustry = [...uniqueSet];
 }
 
+
 export const filterByIndustry = (state: any, action: any) => {
     const companyItems = state.companyItemsBase;
     if (action === 'null' && state.typesIsNull === 'null') {
         state.companyItems = companyItems
         getUniqueTypesCompanies(state, state.companyItems)
     } else if (action === 'null') {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (item?.type.toLocaleLowerCase() === state.typesIsNull.toLocaleLowerCase())
-        });
+        state.companyItems = filterCompaniesByFeature(companyItems, 'type', state.typesIsNull)
         getUniqueTypesCompanies(state, companyItems)
-
     } else if (state.industryIsNull !== 'null' && state.typesIsNull !== 'null') {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (state.typesIsNull.toLocaleLowerCase() === item.type.toLocaleLowerCase() && state.industryIsNull.toLocaleLowerCase() === item.industry.toLocaleLowerCase())
-        });
+        const filterByType = filterCompaniesByFeature(companyItems, 'type', state.typesIsNull);
+        state.companyItems = filterCompaniesByFeature(filterByType, 'industry', state.industryIsNull)
     } else {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (item?.industry.toLocaleLowerCase() === action.toLocaleLowerCase())
-        });
-
+        state.companyItems = filterCompaniesByFeature(companyItems, 'industry', action)
         getUniqueTypesCompanies(state, state.companyItems)
     }
 }
@@ -56,23 +50,21 @@ export const filterByType = (state: any, action: any) => {
     if (action === 'null' && state.industryIsNull === 'null') {
         state.companyItems = companyItems
         getUniqueIndustryCompanies(state, state.companyItems)
-
     } else if (action === 'null') {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (item?.industry.toLocaleLowerCase() === state.industryIsNull.toLocaleLowerCase())
-        });
-
+        state.companyItems = filterCompaniesByFeature(companyItems, 'industry', state.industryIsNull)
         getUniqueIndustryCompanies(state, companyItems)
     } else if (state.industryIsNull !== 'null' && state.typesIsNull !== 'null') {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (state.typesIsNull.toLocaleLowerCase() === item.type.toLocaleLowerCase() && state.industryIsNull.toLocaleLowerCase() === item.industry.toLocaleLowerCase())
-        });
+        const filterByType = filterCompaniesByFeature(companyItems, 'type', state.typesIsNull);
+        state.companyItems = filterCompaniesByFeature(filterByType, 'industry', state.industryIsNull)
     } else {
-        state.companyItems = companyItems.filter((item: any) => {
-            return (item?.type.toLocaleLowerCase() === action.toLocaleLowerCase())
-        });
-
+        state.companyItems = filterCompaniesByFeature(companyItems, 'type', action)
         getUniqueIndustryCompanies(state, state.companyItems)
     }
+}
+
+function filterCompaniesByFeature(arrayCompany: ICompany[], comparedElement: string, element: string): ICompany[] {
+    return arrayCompany.filter((item: any) => {
+        return (item[comparedElement].toLocaleLowerCase() === element.toLocaleLowerCase())
+    });
 }
 
