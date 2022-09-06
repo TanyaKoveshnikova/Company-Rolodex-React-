@@ -1,7 +1,6 @@
-.card-list {
-  width: 85vw;
+.container-card-list {
+  width: 60vw;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1.2rem;
+  grid-template-columns: 0.7fr 3fr 1.2fr;
 }

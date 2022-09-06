@@ -1,4 +1,4 @@
-.card-conteiner {
+.card-container {
   display: flex;
   flex-direction: row;
   background-color: #95dada;
@@ -7,16 +7,18 @@
   padding: 1.3rem;
   cursor: pointer;
   transform: translateZ(0);
-  transition: transform 0.25s easy-out;
+  transition: transform 0.25s ;
   align-items: center;
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 }
 
-.card-conteiner:hover {
-  transform: scale(1.05);
-}
 
 .card-logo img {
-  width: 7rem;
+  width: 10rem;
   margin-right: 1.3em;
 }
 
